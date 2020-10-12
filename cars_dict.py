@@ -19,6 +19,7 @@ sales2016 = ['492,952','315,115','308,561','300,528','234,340','249,047','180,19
 '183,730','NA','NA','177,301','191,617','253,483','208,575','NA','195,653','NA']
 
 answer1_dict = {}
+answer2_dict = {}
 
 cars = {}
 for model, qty2018, qty2017, qty2016 in zip(models, sales2018, sales2017, sales2016):
@@ -34,13 +35,22 @@ for model, qty2018, qty2017, qty2016 in zip(models, sales2018, sales2017, sales2
     else:
         cars[car[0]][car[1]] = {"sales" : {"2016" : qty2016, "2017" : qty2017, "2018" : qty2018}}
     answer1_dict[model] = qty2017
+    #answer2_dict[model] = qty2018 
 print(cars)
 
 
+for brand, a_dict_of_everything in cars.items():
+    for sales, a_dict_of_sales in a_dict_of_everything.items():
+        for year2018, sales2018 in a_dict_of_sales.items():
+            
+            answer2_dict[brand] = sales2018
+
 answer1 = max(answer1_dict, key = answer1_dict.get)
 print(answer1)
-print (answer1_dict)
-answer2 = "" # wskaż producenta jako string
+
+#answer2 =  max(answer2_dict, key = answer2_dict.get)
+#answer2.split(" - ")
+#print(answer2_dict)
 answer3 = [] # wskaż odpowiedź jako listę zawierającą wszystkie modele spełniające kryteria
 answer4 = "" # wskaż nazwę modelu jako string
 answer5 = "" # odpowiedź podaj w formacie procentowym jako string. Np. '21%' 
