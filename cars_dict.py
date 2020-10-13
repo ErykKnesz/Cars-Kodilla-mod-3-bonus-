@@ -61,9 +61,9 @@ def answer3():
 def answer4():
     temp_dict = {}
     for brand, data in cars.items():
-        temp = 0
         for model, sales in data.items():
-            # print('{} {} in 2018: {}'.format(brand, model, sales['sales']['2018']))
+            temp = 0
+            print('{} {} in 2018: {}'.format(brand, model, sales['sales']['2018']))
             temp += (sales['sales']['2016'] + sales['sales']['2017'] + sales['sales']['2018'])
         temp_dict[model] = temp
     print(temp_dict)
@@ -93,6 +93,6 @@ answer2_list = find_best_brand_2018() # Adam
 answer2 = answer2_list[0][0] # Adam
 answer3 = answer3() # Adam
 answer4_list = answer4() # Adam
-answer4 = answer4_list[0][0] # Adam (work in progress)
+answer4 = answer4_list[0][0] # Adam
 print(answer4) 
 answer5 = str(f"{round(ford_sales_change())}%")
