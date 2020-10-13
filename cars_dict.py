@@ -19,7 +19,6 @@ sales2016 = ['492,952','315,115','308,561','300,528','234,340','249,047','180,19
 '183,730','NA','NA','177,301','191,617','253,483','208,575','NA','195,653','NA']
 
 answer1_data = {}
-answer2_data = []
 
 cars = {}
 for model, qty2018, qty2017, qty2016 in zip(models, sales2018, sales2017, sales2016):
@@ -35,14 +34,65 @@ for model, qty2018, qty2017, qty2016 in zip(models, sales2018, sales2017, sales2
     else:
         cars[car[0]][car[1]] = {"sales" : {"2016" : qty2016, "2017" : qty2017, "2018" : qty2018}}
     answer1_data[model] = qty2017
-    answer2_data.append([car[0], qty2018]) 
+
 print(cars)
 
-answer1 = max(answer1_data, key = answer1_data.get)
-print(answer1)
 
-answer2 =  max(map(lambda sales2018: sales2018[1], answer2_data)) # to jest do poprawy...
+def find_best_brand_2018():
+    temp_dict = {}
+    for brand, data in cars.items():
+        temp = 0
+        for model, sales in data.items():
+            # print('{} {} in 2018: {}'.format(brand, model, sales['sales']['2018']))
+            temp += sales['sales']['2018']
+        temp_dict[brand] = temp
+    return sorted(temp_dict.items(), key = lambda x: x[1], reverse = True)
 
-answer3 = [] # wskaż odpowiedź jako listę zawierającą wszystkie modele spełniające kryteria
-answer4 = "" # wskaż nazwę modelu jako string
-answer5 = "" # odpowiedź podaj w formacie procentowym jako string. Np. '21%' 
+
+def answer3():
+    temp_list = []
+    for brand, data in cars.items():
+        for model, sales in data.items():
+            if (sales['sales']['2016'] == 0) and (not sales['sales']['2017'] == 0):
+                temp_list.append(model)
+    return temp_list
+
+
+def answer4():
+    temp_dict = {}
+    for brand, data in cars.items():
+        temp = 0
+        for model, sales in data.items():
+            # print('{} {} in 2018: {}'.format(brand, model, sales['sales']['2018']))
+            temp += (sales['sales']['2016'] + sales['sales']['2017'] + sales['sales']['2018'])
+        temp_dict[model] = temp
+    print(temp_dict)
+    return sorted(temp_dict.items(), key = lambda x: x[1])
+
+
+def ford_sales_change():
+    sales2018 = []
+    sales2017 = []
+    for brand, data in cars.items():
+        if brand == 'Ford':
+            for model, sales_data in data.items():
+                for sales, quantities_per_year in sales_data.items():
+                    for year, quantity in quantities_per_year.items():
+                        if year == '2017':
+                            sales2017.append(quantity)
+                        if year == '2018':
+                            sales2018.append(quantity)
+
+    sales_yoy = sum(sales2018) - sum(sales2017)
+
+    return (sales_yoy / sum(sales2017)) * 100
+
+
+answer1 = max(answer1_data, key = answer1_data.get) # zostawiłem swoją wersję dla własnej referencji
+answer2_list = find_best_brand_2018() # Adam
+answer2 = answer2_list[0][0] # Adam
+answer3 = answer3() # Adam
+answer4_list = answer4() # Adam
+answer4 = answer4_list[0][0] # Adam (work in progress)
+print(answer4) 
+answer5 = str(f"{round(ford_sales_change())}%")
