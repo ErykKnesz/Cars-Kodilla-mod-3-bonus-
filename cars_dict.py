@@ -38,12 +38,13 @@ for model, qty2018, qty2017, qty2016 in zip(models, sales2018, sales2017, sales2
     #answer2_dict[model] = qty2018 
 print(cars)
 
-
+'''
 for brand, a_dict_of_everything in cars.items():
     for sales, a_dict_of_sales in a_dict_of_everything.items():
         for year2018, sales2018 in a_dict_of_sales.items():
             
             answer2_dict[brand] = sales2018
+'''
 
 answer1 = max(answer1_dict, key = answer1_dict.get)
 print(answer1)
